@@ -77,4 +77,4 @@ Saya Naufal Zahid dengan NIM 2405787 mengerjakan TP 6 dalam mata kuliah Desain d
    - Kembali ke Home: Tombol "KEMBALI KE HOME" pada GameOverPanel atau PausePanel menutup Game Frame dan kembali meluncurkan MainMenu.
 
 # Dokumentasi
-https://github.com/user-attachments/assets/3f833a2a-b855-4f72-a476-68b5fcd82800
+https://github.com/user-attachments/assets/20fe0fb8-f6bf-4a5c-b7e6-523386b52f26
