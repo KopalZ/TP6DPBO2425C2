@@ -2,54 +2,58 @@
 Saya Naufal Zahid dengan NIM 2405787 mengerjakan TP 6 dalam mata kuliah Desain dan Pemrograman Berorientasi Objek untuk keberkahanNya maka saya tidak melakukan kecurangan seperti yang telah dispesifikasikan. Aamiin
 
 # Penjelasan Desain dan Flow Code
-1. Class Karakter
+1. **Struktur Class Utama (Model-View-Controller)**
 
-   Class ini berfungsi sebagai model data (data model) untuk setiap karakter.
+   1.1. **Class Logic (Model & Controller)**
 
-   Atribut:
+   Kelas ini bertindak sebagai pusat logika (Model) dan pengelola state (Controller) utama game.
 
-   - id: String (ID unik karakter).
+   - Tanggung Jawab: Menangani fisika burung (gravitasi, lompatan), pergerakan pipa, deteksi tabrakan, sistem skoring, dan mengelola state game (MENU, RUNNING, PAUSED, GAME_OVER).
 
-   - nama: String (Nama karakter).
+   - Komponen Kunci: Menggunakan Timer (gameLoop dan pipesCooldown) untuk pembaruan game tick dan spawning pipa.
 
-   - status: String (Pilihan: Murni, Campuran, Muggle).
+   1.2. **Class View (View)**
 
-   - peran: String (Pilihan: Guru, Murid, Penjahat).
+   Panel utama yang bertanggung jawab penuh atas rendering grafis.
 
-   - asrama: String (Pilihan: Gryffindor, Slytherin, Ravenclaw, Hufflepuff).
+   - Tanggung Jawab: Menggambar burung, pipa, tanah, dan pesan state (seperti pesan awal).
 
-   Method:
+   - Metode Utama: Menggunakan paintComponent(Graphics gg) untuk menggambar ulang seluruh elemen game pada setiap tick dari gameLoop.
 
-   - Konstruktor: Untuk inisialisasi objek karakter.
+   1.3. **Class App (Launcher & Integrasi UI)**
 
-   - Getter dan Setter: Untuk mengakses dan memodifikasi atribut privat.
+   Kelas utama yang menjalankan aplikasi dan mengintegrasikan semua komponen UI yang berbeda.
 
-3. Class Database
+   - Tanggung Jawab: Membuat JFrame utama, menginisialisasi Logic dan View, dan menumpuk komponen UI interaktif (JLabel, GameOverPanel, PausePanel) menggunakan JLayeredPane.
 
-   Class ini menangani semua interaksi dengan database MySQL menggunakan Java JDBC.
+2. **Komponen UI Interaktif (Overlay Panels)**
 
-   - Koneksi: Membuat koneksi ke database dengan URL: "jdbc:mysql://localhost:3306/HarryPotter", user "root", dan kata sandi kosong.
+   Untuk memberikan pengalaman pengguna yang lengkap dan terstruktur, program menggunakan tiga komponen overlay (lapisan antarmuka) utama yang dibangun menggunakan Java Swing. Kelas-kelas ini disisipkan di atas panel utama permainan (View) menggunakan JLayeredPane di App.java.
 
-   Method:
+   2.1 **Class MainMenu.java**
 
-   - selectQuery(String sql): Untuk mengeksekusi perintah SELECT. Mengembalikan objek ResultSet.
+   - Tipe Komponen: JFrame.
 
-   - insertUpdateDeleteQuery(String sql): Untuk mengeksekusi perintah INSERT, UPDATE, atau DELETE. Mengembalikan jumlah baris yang terpengaruh.
+   - Fungsi: Bertindak sebagai launcher aplikasi dan pintu masuk ke permainan.
 
-4. Class KarakterMenu (GUI)
+   - Konten: Menampilkan judul utama ("FLAPPY BIRD") dan dua opsi interaktif: "PLAY GAME" (untuk memulai Game Frame) dan "EXIT PROGRAM" (untuk menutup aplikasi).
 
-   Antarmuka pengguna dibuat menggunakan Java Swing melalui GUI Designer (IntelliJ IDEA) dan merupakan controller utama yang mengelola logika bisnis dan interaksi database.
+   - Desain: Ukuran frame diatur statis $540 \times 800$ agar konsisten dengan ukuran Game Frame. Konten (judul dan tombol) diposisikan di tengah secara vertikal menggunakan kombinasi BoxLayout dan VerticalGlue.
 
-   Elemen Utama GUI:
+   2.2 **Class GameOverPanel.java**
 
-   - JTextField: Input untuk ID dan Nama karakter.
+   - Tipe Komponen: JPanel (semi-transparan).
+   - Fungsi: Muncul saat state game beralih ke State.GAME_OVER (setelah tabrakan atau jatuh ke tanah). Panel ini memblokir input mouse/keyboard kecuali tombol 'R'.
+   - Konten: Menampilkan pesan "GAME OVER", Skor Anda, Best Skor, dan tombol "KEMBALI KE HOME".
+   - Aksi Kunci: Menyediakan opsi navigasi kembali ke MainMenu. Aksi restart utama diaktifkan melalui input tombol 'R' di Logic.java.
 
-   - JComboBox: Pemilihan Status, Peran, dan Asrama dengan opsi default "???".
+   2.3 **Class PausePanel.java**
 
-   - JTable: Menampilkan daftar semua karakter dari database dalam model tabel.
-
-   - JButton: Tombol Add / Update, Delete, dan Cancel.
-     
+   - Tipe Komponen: JPanel (semi-transparan).
+   - Fungsi: Muncul saat state game adalah State.PAUSED (dipicu oleh penekanan tombol 'P'). Panel ini menghentikan semua game timer (pergerakan pipa dan fisika).
+   - Konten: Menampilkan pesan "GAME PAUSED", instruksi untuk melanjutkan permainan ('P'), dan tombol "KEMBALI KE HOME".
+   - Aksi Kunci: Memungkinkan pengguna untuk melanjutkan permainan dengan menekan 'P' atau keluar dari sesi permainan saat ini untuk kembali ke MainMenu.
+   
 ## alur atau flow codenya :
 
 1. Inisialisasi dan Tampilan Data (Read)
