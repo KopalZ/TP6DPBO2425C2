@@ -76,4 +76,5 @@ Saya Naufal Zahid dengan NIM 2405787 mengerjakan TP 6 dalam mata kuliah Desain d
    - Pause: Menekan tombol 'P' saat State.RUNNING memanggil Logic.pauseGame(), menghentikan semua timer dan menampilkan PausePanel. Menekan 'P' lagi memanggil Logic.resumeGame().
    - Kembali ke Home: Tombol "KEMBALI KE HOME" pada GameOverPanel atau PausePanel menutup Game Frame dan kembali meluncurkan MainMenu.
 
-# Dokumentasi Program Berhasil Berjalan
+# Dokumentasi
+https://github.com/user-attachments/assets/3f833a2a-b855-4f72-a476-68b5fcd82800
