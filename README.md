@@ -47,51 +47,33 @@ Saya Naufal Zahid dengan NIM 2405787 mengerjakan TP 6 dalam mata kuliah Desain d
    - Konten: Menampilkan pesan "GAME OVER", Skor Anda, Best Skor, dan tombol "KEMBALI KE HOME".
    - Aksi Kunci: Menyediakan opsi navigasi kembali ke MainMenu. Aksi restart utama diaktifkan melalui input tombol 'R' di Logic.java.
 
-   ###2.3 **Class PausePanel.java**
+   ### 2.3 **Class PausePanel.java**
 
    - Tipe Komponen: JPanel (semi-transparan).
    - Fungsi: Muncul saat state game adalah State.PAUSED (dipicu oleh penekanan tombol 'P'). Panel ini menghentikan semua game timer (pergerakan pipa dan fisika).
    - Konten: Menampilkan pesan "GAME PAUSED", instruksi untuk melanjutkan permainan ('P'), dan tombol "KEMBALI KE HOME".
    - Aksi Kunci: Memungkinkan pengguna untuk melanjutkan permainan dengan menekan 'P' atau keluar dari sesi permainan saat ini untuk kembali ke MainMenu.
    
-## 3. alur atau flow codenya :
+## 3. Alur dan Flow Code Utama
 
-1. Inisialisasi dan Tampilan Data (Read)
-   - Saat $KarakterMenu$ dibuat, objek Database diinisialisasi untuk membuat koneksi.
-  
-   - Method loadTableData() dipanggil.
-  
-   - Method ini mengeksekusi SELECT * FROM karakter melalui $Database.selectQuery() dan mengisi JTable dengan data dari $ResultSet$.
+   ### 3.1 Inisialisasi Program
+   - App.main() memanggil SwingUtilities.invokeLater() untuk menjalankan MainMenu di Event Dispatch Thread (EDT).
+   - MainMenu muncul di tengah layar dengan ukuran $540 \times 800$.
 
-2. Menambahkan Karakter Baru (Create)
-   - Pengguna mengisi form dan menekan tombol Add.
-  
-   - Dilakukan validasi input (kolom tidak boleh kosong dan ComboBox tidak boleh "???").
-  
-   - Dicek apakah ID sudah ada di database dengan SELECT * FROM karakter WHERE id='...'.
-  
-   - Jika ID unik, perintah INSERT dikirim ke database melalui $Database.insertUpdateDeleteQuery()$.
-  
-   - Setelah berhasil, tabel dimuat ulang (loadTableData()) dan form dibersihkan (clearForm()).
+   ### 3.2 Memulai Permainan (Play Game)
+   - Pengguna menekan tombol "PLAY GAME" di MainMenu.
+   - MainMenu ditutup (dispose()), dan App.showGameFrame() dipanggil.
+   - App.showGameFrame() membuat instance Logic dan View, menumpuk View, ScoreLabel, PausePanel, dan GameOverPanel di dalam JLayeredPane, lalu memanggil frame.pack() dan frame.setLocationRelativeTo(null).
+   - Logic.startGame() dipanggil, menyetel state ke RUNNING, dan memulai pipesCooldown dan gameLoop.
 
-3. Mengubah Karakter (Update)
-   - Memilih baris di $JTable$ akan mengisi form dengan data karakter dan mengubah tombol menjadi Update.
-  
-   - Saat tombol Update ditekan, perintah UPDATE dikirim ke database ($Database.insertUpdateDeleteQuery()$) untuk memodifikasi data berdasarkan ID karakter.
-  
-   - Tabel dimuat ulang dan form dibersihkan.
+   ### 3.3 Logika Game
+   - Skoring: Logic memperbarui score (+1) ketika burung melewati pipa, dan scoreLabel di-update pada setiap tick (Logic.update()).
+   - Lompatan: Logic.handleInput() menerima input Spasi/Klik dan memberikan dorongan vertikal (velocityY = -10) pada Player.
+   - Game Over (Wajib 1): Jika Player berinteraksi dengan Pipe (tabrakan) atau menyentuh tanah (frameHeight - groundHeight), Logic.gameOver() dipanggil, menghentikan kedua timer.
 
-4. Menghapus Karakter (Delete)
-   - Tombol Delete akan terlihat setelah memilih baris.
-  
-   - Setelah konfirmasi, perintah DELETE dikirim ke database ($Database.insertUpdateDeleteQuery()$) berdasarkan ID karakter.
-  
-   - Tabel dimuat ulang dan form dibersihkan.
-
-5. Membatalkan Input (Cancel)
-   - Tombol Cancel memanggil clearForm(), yang mengosongkan semua field, mengatur ulang ComboBox, dan mengembalikan tombol ke mode Add.
-  
-6. Menutup Program
-   - Program GUI dapat ditutup melalui tombol close (X) di jendela aplikasi.
+   ### 3.4 Restart dan Menu Interaktif
+   - Restart: Ketika State adalah GAME_OVER, menekan tombol 'R' di keyboard akan memanggil Logic.restartGame(), yang menyetel ulang posisi, skor, dan state ke RUNNING.
+   - Pause: Menekan tombol 'P' saat State.RUNNING memanggil Logic.pauseGame(), menghentikan semua timer dan menampilkan PausePanel. Menekan 'P' lagi memanggil Logic.resumeGame().
+   - Kembali ke Home: Tombol "KEMBALI KE HOME" pada GameOverPanel atau PausePanel menutup Game Frame dan kembali meluncurkan MainMenu.
 
 # Dokumentasi Program Berhasil Berjalan
