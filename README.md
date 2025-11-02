@@ -2,9 +2,9 @@
 Saya Naufal Zahid dengan NIM 2405787 mengerjakan TP 6 dalam mata kuliah Desain dan Pemrograman Berorientasi Objek untuk keberkahanNya maka saya tidak melakukan kecurangan seperti yang telah dispesifikasikan. Aamiin
 
 # Penjelasan Desain dan Flow Code
-1. **Struktur Class Utama (Model-View-Controller)**
+## 1. **Struktur Class Utama (Model-View-Controller)**
 
-   1.1. **Class Logic (Model & Controller)**
+   ### 1.1. **Class Logic (Model & Controller)**
 
    Kelas ini bertindak sebagai pusat logika (Model) dan pengelola state (Controller) utama game.
 
@@ -12,7 +12,7 @@ Saya Naufal Zahid dengan NIM 2405787 mengerjakan TP 6 dalam mata kuliah Desain d
 
    - Komponen Kunci: Menggunakan Timer (gameLoop dan pipesCooldown) untuk pembaruan game tick dan spawning pipa.
 
-   1.2. **Class View (View)**
+   ### 1.2. **Class View (View)**
 
    Panel utama yang bertanggung jawab penuh atas rendering grafis.
 
@@ -20,17 +20,17 @@ Saya Naufal Zahid dengan NIM 2405787 mengerjakan TP 6 dalam mata kuliah Desain d
 
    - Metode Utama: Menggunakan paintComponent(Graphics gg) untuk menggambar ulang seluruh elemen game pada setiap tick dari gameLoop.
 
-   1.3. **Class App (Launcher & Integrasi UI)**
+   ### 1.3. **Class App (Launcher & Integrasi UI)**
 
    Kelas utama yang menjalankan aplikasi dan mengintegrasikan semua komponen UI yang berbeda.
 
    - Tanggung Jawab: Membuat JFrame utama, menginisialisasi Logic dan View, dan menumpuk komponen UI interaktif (JLabel, GameOverPanel, PausePanel) menggunakan JLayeredPane.
 
-2. **Komponen UI Interaktif (Overlay Panels)**
+## 2. **Komponen UI Interaktif (Overlay Panels)**
 
    Untuk memberikan pengalaman pengguna yang lengkap dan terstruktur, program menggunakan tiga komponen overlay (lapisan antarmuka) utama yang dibangun menggunakan Java Swing. Kelas-kelas ini disisipkan di atas panel utama permainan (View) menggunakan JLayeredPane di App.java.
 
-   2.1 **Class MainMenu.java**
+   ### 2.1 **Class MainMenu.java**
 
    - Tipe Komponen: JFrame.
 
@@ -40,21 +40,21 @@ Saya Naufal Zahid dengan NIM 2405787 mengerjakan TP 6 dalam mata kuliah Desain d
 
    - Desain: Ukuran frame diatur statis $540 \times 800$ agar konsisten dengan ukuran Game Frame. Konten (judul dan tombol) diposisikan di tengah secara vertikal menggunakan kombinasi BoxLayout dan VerticalGlue.
 
-   2.2 **Class GameOverPanel.java**
+   ### 2.2 **Class GameOverPanel.java**
 
    - Tipe Komponen: JPanel (semi-transparan).
    - Fungsi: Muncul saat state game beralih ke State.GAME_OVER (setelah tabrakan atau jatuh ke tanah). Panel ini memblokir input mouse/keyboard kecuali tombol 'R'.
    - Konten: Menampilkan pesan "GAME OVER", Skor Anda, Best Skor, dan tombol "KEMBALI KE HOME".
    - Aksi Kunci: Menyediakan opsi navigasi kembali ke MainMenu. Aksi restart utama diaktifkan melalui input tombol 'R' di Logic.java.
 
-   2.3 **Class PausePanel.java**
+   ###2.3 **Class PausePanel.java**
 
    - Tipe Komponen: JPanel (semi-transparan).
    - Fungsi: Muncul saat state game adalah State.PAUSED (dipicu oleh penekanan tombol 'P'). Panel ini menghentikan semua game timer (pergerakan pipa dan fisika).
    - Konten: Menampilkan pesan "GAME PAUSED", instruksi untuk melanjutkan permainan ('P'), dan tombol "KEMBALI KE HOME".
    - Aksi Kunci: Memungkinkan pengguna untuk melanjutkan permainan dengan menekan 'P' atau keluar dari sesi permainan saat ini untuk kembali ke MainMenu.
    
-## alur atau flow codenya :
+## 3. alur atau flow codenya :
 
 1. Inisialisasi dan Tampilan Data (Read)
    - Saat $KarakterMenu$ dibuat, objek Database diinisialisasi untuk membuat koneksi.
